@@ -5,9 +5,15 @@
 #include <iostream>
 
 #include "tokens.hpp"
+#include "utils.h"
 
 void showToken(const char *name) {
     printf("%d %s %s\n", yylineno, name, yytext);
+}
+
+void showString(){
+    std::string product = string_lexeme_proccessor(yytext);
+    printf("%d STRING %s\n", yylineno, product.c_str());
 }
 
 int main()
