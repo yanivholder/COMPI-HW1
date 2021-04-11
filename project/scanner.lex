@@ -8,14 +8,12 @@
 %option yylineno
 %option noyywrap
 
-//%x              str
 digit           ([0-9])
 hex             ([0-9a-fA-F]{2})
 nonzerodigit    ([1-9])
 letter          ([a-zA-Z])
-//printable       ([ -!#-\[\]-~\t])
-escape          (\\\\|\\"|\\n|\\r|\\t|\\0|\\x(hex))
-escapechar      ([\\"nrt0]|x(hex))
+escape          (\\\\|\\\"|\\n|\\r|\\t|\\0|\\x(hex))
+escapechar      ([\\\"nrt0]|x(hex))
 illegalescape   (\\[^\\nrt0(x(hex))])
 whitespace      ([\t\n ])
 
@@ -51,26 +49,17 @@ default                     return DEFAULT;
 ==|!=|<|>|<=|>=             return RELOP;
 \+|\-|\*|\/                 return BINOP;
 \/\/[^\n\r]*                return COMMENT;
-(letter)((letter)|(digit))* return ID;
-0|((nonzerodigit)(digit)*)  return NUM;
-"([^\\"\n\r]|(escape))*"    return STRING;
+{letter}({letter}|{digit})* return ID;
+0|({nonzerodigit}{digit}*)  return NUM;
+\"([^\\\"\n\r]|{escape})*\" return STRING;
+\"([^\\\"\n\r]|{escape})*\n return UNCLOSED_STRING;
 
 
 
-/*
-"([^\\"\n\r]|(escape))*\n   return UNCLOSED_STRING;
-"([^\\"\n\r]|(escape))*\\[^(escapechar)].*"  return UNDEFINED_ESCAPE;
-
-
-
-\"([^\"]*)[\n|\n\r]         return STRING_ERROR;
-\"(({printable}|{escape})*)\"   return STRING;
-\"<EOF>                     return STRING_ERROR;
-\"                          return STRING_ERROR;
 
 [\t\r\n ]                ;
 
-*/
+
 .                           return ERROR;
 
 %%

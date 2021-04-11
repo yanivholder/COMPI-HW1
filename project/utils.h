@@ -27,8 +27,8 @@ char convert_hex_to_ascii(char big, char small){
     return (char)(new_big+new_small);
 }
 
-string string_lexeme_proccessor(string yytext){
-    string before = yytext;
+string string_lexeme_proccessor(string text){
+    string before = text;
     string after;
     before = before.substr(1, before.length()-2); //cut off ""
     for(int i=0; i < before.length(); i++){

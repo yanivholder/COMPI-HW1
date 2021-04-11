@@ -34,12 +34,14 @@ enum tokentype {
     COMMENT = 30,
     ID = 31,
     NUM = 32,
-    STRING = 33
+    STRING = 33,
+    UNCLOSED_STRING = 34,
+    ERROR = 35
 };
 
 extern int yylineno;
 extern char *yytext;
-extern size_t yyleng;
+extern int yyleng;
 
 extern int yylex();
 

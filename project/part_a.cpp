@@ -1,18 +1,17 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
-#include <vector>
-#include <iostream>
-
 #include "tokens.hpp"
 #include "utils.h"
+
+extern int yylex();
 
 void showToken(const char *name) {
     printf("%d %s %s\n", yylineno, name, yytext);
 }
 
 void showString(){
-    std::string product = string_lexeme_proccessor(yytext);
+    std::string product = string_lexeme_proccessor(string(yytext));
     printf("%d STRING %s\n", yylineno, product.c_str());
 }
 
@@ -120,10 +119,9 @@ int main()
             case STRING:
                 showString();
                 break;
-            // TODO: add all of the errors types
-//            case STRING_ERROR:
-//                cout << "Error unclosed string" << endl;
-//                exit(0);
+            case UNCLOSED_STRING:
+                cout << "Error unclosed string" << endl;
+                exit(0);
             // TODO: check it
             default:
                 cout << "Error " << yytext[yyleng - 1] << endl;
