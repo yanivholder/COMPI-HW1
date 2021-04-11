@@ -41,8 +41,7 @@ enum tokentype {
 
 extern int yylineno;
 extern char *yytext;
-extern int yyleng;
-
+extern size_t yyleng;
 extern int yylex();
 
 

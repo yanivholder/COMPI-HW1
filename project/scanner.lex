@@ -51,8 +51,8 @@ default                     return DEFAULT;
 \/\/[^\n\r]*                return COMMENT;
 {letter}({letter}|{digit})* return ID;
 0|({nonzerodigit}{digit}*)  return NUM;
-\"([^\\\"\n\r]|{escape})*\" return STRING;
-\"([^\\\"\n\r]|{escape})*\n return UNCLOSED_STRING;
+\".*\" 						return STRING;
+\"([^\"])*\n				return UNCLOSED_STRING;
 
 
 
