@@ -15,6 +15,11 @@ void print_tabs(int num)
     }
 }
 
+void showTokenAndQuit(string st) {
+    cout << "Error: " << st << endl;
+    exit(0);
+}
+
 int main()
 {
 	int token;
@@ -33,6 +38,10 @@ int main()
                 p_vec.emplace_back("{");
                 break;
             case RPAREN:
+                if (p_vec.empty()) {
+                    cout << "Error: Bad Expression" << endl;
+                    exit(0);
+                }
                 if (p_vec[p_vec.size() - 1] != "(") {
                     cout << "Error: Bad Expression" << endl;
                     exit(0);
@@ -43,6 +52,10 @@ int main()
                 }
                 break;
             case RBRACE:
+                if (p_vec.empty()) {
+                    cout << "Error: Bad Expression" << endl;
+                    exit(0);
+                }
                 if (p_vec[p_vec.size() - 1] != "{") {
                     cout << "Error: Bad Expression" << endl;
                     exit(0);
@@ -52,13 +65,101 @@ int main()
                     cout << "}" << endl;
                 }
                 break;
-            case ERROR:
+            case VOID:
+                showTokenAndQuit("VOID");
+                break;
+            case INT:
+                showTokenAndQuit("INT");
+                break;
+            case BYTE:
+                showTokenAndQuit("BYTE");
+                break;
+            case B:
+                showTokenAndQuit("B");
+                break;
+            case BOOL:
+                showTokenAndQuit("BOOL");
+                break;
+            case AND:
+                showTokenAndQuit("AND");
+                break;
+            case OR:
+                showTokenAndQuit("OR");
+                break;
+            case NOT:
+                showTokenAndQuit("NOT");
+                break;
+            case TRUE:
+                showTokenAndQuit("TRUE");
+                break;
+            case FALSE:
+                showTokenAndQuit("FALSE");
+                break;
+            case RETURN:
+                showTokenAndQuit("RETURN");
+                break;
+            case IF:
+                showTokenAndQuit("IF");
+                break;
+            case ELSE:
+                showTokenAndQuit("ELSE");
+                break;
+            case WHILE:
+                showTokenAndQuit("WHILE");
+                break;
+            case BREAK:
+                showTokenAndQuit("BREAK");
+                break;
+            case CONTINUE:
+                showTokenAndQuit("CONTINUE");
+                break;
+            case SWITCH:
+                showTokenAndQuit("SWITCH");
+                break;
+            case CASE:
+                showTokenAndQuit("CASE");
+                break;
+            case DEFAULT:
+                showTokenAndQuit("DEFAULT");
+                break;
+            case COLON:
+                showTokenAndQuit("COLON");
+                break;
+            case SC:
+                showTokenAndQuit("SC");
+                break;
+            case COMMA:
+                showTokenAndQuit("COMMA");
+                break;
+            case ASSIGN:
+                showTokenAndQuit("ASSIGN");
+                break;
+            case RELOP:
+                showTokenAndQuit("RELOP");
+                break;
+            case BINOP:
+                showTokenAndQuit("BINOP");
+                break;
+            case COMMENT:
+                printf("COMMENT\n");
+                break;
+            case ID:
+                showTokenAndQuit("ID");
+                break;
+            case NUM:
+                showTokenAndQuit("NUM");
+                break;
+            case STRING:
+                showTokenAndQuit("STRING");
+                break;
+            default:
                 cout << "Error " << yytext[yyleng - 1] << endl;
                 exit(0);
-            default:
-                cout << "Error: " << yytext << endl;
-                exit(0);
         }
+	}
+	if (!p_vec.empty()) {
+        cout << "Error: Bad Expression" << endl;
+        exit(0);
 	}
 	return 0;
 }
